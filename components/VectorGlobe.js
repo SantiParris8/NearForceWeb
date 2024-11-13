@@ -5,7 +5,6 @@ import { Line, OrbitControls } from '@react-three/drei'
 import { useRef } from 'react'
 import * as THREE from 'three'
 
-// Helper function to convert lat/long to 3D coordinates
 function latLongToVector3(lat, lon, radius) {
   const phi = (90 - lat) * (Math.PI / 180)
   const theta = (lon + 180) * (Math.PI / 180)
@@ -17,42 +16,62 @@ function latLongToVector3(lat, lon, radius) {
   )
 }
 
-// Simplified country coordinates (just for demonstration)
-const countries = [
-  // North America
-  [
-    [50, -125], [60, -95], [45, -75], [30, -85],
-    [25, -100], [35, -120], [50, -125]
+// More accurate country coordinates
+const countries = {
+  uruguay: [
+    [-30.1, -57.8], [-30.8, -57.8], [-31.4, -58.0], 
+    [-31.9, -58.0], [-32.5, -58.1], [-33.1, -58.3],
+    [-33.5, -58.4], [-34.0, -58.4], [-34.5, -58.3],
+    [-34.9, -57.8], [-34.9, -57.3], [-34.7, -56.7],
+    [-34.5, -56.2], [-34.2, -55.7], [-33.7, -55.2],
+    [-33.2, -54.7], [-32.7, -54.3], [-32.2, -54.2],
+    [-31.7, -54.1], [-31.2, -54.2], [-30.9, -54.6],
+    [-30.5, -55.0], [-30.2, -55.5], [-30.1, -56.0],
+    [-30.1, -56.5], [-30.1, -57.2], [-30.1, -57.8]
   ],
-  // South America
-  [
-    [5, -80], [0, -50], [-20, -40], [-40, -65],
-    [-30, -75], [-5, -80], [5, -80]
-  ],
-  // Europe
-  [
-    [45, -10], [60, 0], [55, 20], [45, 30],
-    [40, 20], [35, 0], [45, -10]
-  ],
-  // Africa
-  [
-    [35, -10], [30, 30], [0, 40], [-30, 20],
-    [-35, -10], [0, -10], [35, -10]
-  ],
-  // Asia
-  [
-    [55, 40], [60, 60], [55, 90], [45, 120],
-    [30, 110], [25, 90], [35, 70], [30, 50],
-    [45, 40], [55, 40]
-  ],
-  // Australia
-  [
-    [-20, 110], [-15, 130], [-25, 145], [-35, 140],
-    [-35, 115], [-20, 110]
+  otherCountries: [
+    // South America (more detailed)
+    [
+      [12.4, -71.3], [4.0, -81.3], [-18.3, -70.3], 
+      [-52.3, -69.1], [-55.9, -67.3], [-54.9, -64.3],
+      [-34.9, -56.2], [-22.9, -43.2], [-5.2, -35.3],
+      [11.7, -71.3], [12.4, -71.3]
+    ],
+    // Other continents remain simplified for performance
+    // North America
+    [
+      [83.1, -75.0], [76.2, -120.0], [68.9, -166.5],
+      [45.5, -124.7], [25.8, -97.5], [15.0, -83.9],
+      [51.3, -64.0], [83.1, -75.0]
+    ],
+    // Europe
+    [
+      [71.1, 27.7], [65.9, 19.4], [59.7, 30.3],
+      [45.4, 12.5], [36.5, -9.5], [43.5, -10.0],
+      [58.6, -7.7], [71.1, 27.7]
+    ],
+    // Africa
+    [
+      [35.9, -5.6], [31.7, 34.6], [11.7, 51.4],
+      [-34.8, 20.0], [-34.1, 18.5], [4.7, 9.3],
+      [35.9, -5.6]
+    ],
+    // Asia
+    [
+      [65.5, 100.0], [77.0, 104.0], [75.8, 136.7],
+      [50.1, 155.1], [19.5, 109.7], [1.8, 103.8],
+      [12.8, 43.3], [42.3, 51.3], [65.5, 100.0]
+    ],
+    // Australia
+    [
+      [-11.1, 132.4], [-13.7, 142.5], [-25.7, 153.2],
+      [-37.5, 150.0], [-43.6, 147.3], [-37.8, 140.2],
+      [-22.9, 114.0], [-11.1, 132.4]
+    ]
   ]
-]
+}
 
-// Latitude lines
+// Generate latitude lines
 const latitudeLines = Array.from({ length: 19 }, (_, i) => {
   const lat = -90 + i * 10
   return Array.from({ length: 361 }, (_, j) => {
@@ -61,7 +80,7 @@ const latitudeLines = Array.from({ length: 19 }, (_, i) => {
   })
 })
 
-// Longitude lines
+// Generate longitude lines
 const longitudeLines = Array.from({ length: 37 }, (_, i) => {
   const lon = -180 + i * 10
   return Array.from({ length: 181 }, (_, j) => {
@@ -107,8 +126,8 @@ function Globe() {
         />
       ))}
 
-      {/* Continents */}
-      {countries.map((country, i) => {
+      {/* Other countries */}
+      {countries.otherCountries.map((country, i) => {
         const points = country.map(([lat, lon]) => latLongToVector3(lat, lon, 1))
         return (
           <Line
@@ -119,6 +138,20 @@ function Globe() {
           />
         )
       })}
+
+      {/* Uruguay highlighted */}
+      {(() => {
+        const points = countries.uruguay.map(([lat, lon]) => 
+          latLongToVector3(lat, lon, 1)
+        )
+        return (
+          <Line
+            points={points}
+            color="#2563eb"
+            lineWidth={2.5}
+          />
+        )
+      })()}
 
       {/* Outer glow sphere */}
       <mesh>

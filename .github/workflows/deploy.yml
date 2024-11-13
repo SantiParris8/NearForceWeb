@@ -26,16 +26,22 @@ jobs:
       - name: Initialize Next.js
         run: npx create-next-app nearforceweb --ts --tailwind --eslint --app --no-src-dir --import-alias "@/*" --use-npm --yes
 
-      - name: Move files to root
+      - name: Move files
         run: |
-          mv nearforceweb/* .
-          mv nearforceweb/.* . || true
+          cp -r nearforceweb/* .
+          cp -r nearforceweb/.* . 2>/dev/null || true
           rm -rf nearforceweb
+
+      - name: Update package.json
+        run: |
+          npm pkg set name="nearforceweb"
+          # Ensure specific React version
+          npm install react@18.2.0 react-dom@18.2.0 --save --legacy-peer-deps
 
       - name: Install additional dependencies
         run: |
-          npm install framer-motion lucide-react
-          npm install -D shadcn
+          npm install framer-motion@10.16.4 lucide-react@0.294.0 --save --legacy-peer-deps
+          npm install -D shadcn --legacy-peer-deps
 
       - name: Create directory structure
         run: |
@@ -87,13 +93,6 @@ jobs:
             basePath: "/NearForceWeb",
             assetPrefix: "/NearForceWeb/",
           }' > next.config.js
-
-      - name: Verify package.json
-        run: |
-          if [ ! -f "package.json" ]; then
-            echo '{"name":"nearforceweb","version":"0.1.0","private":true}' > package.json
-          fi
-          npm pkg set name="nearforceweb"
 
       - name: Build
         run: |

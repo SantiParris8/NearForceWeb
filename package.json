@@ -1,5 +1,5 @@
 {
-  "name": "nearforce-web",
+  "name": "nearforceweb",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -16,9 +16,9 @@
     "class-variance-authority": "0.7.0",
     "clsx": "2.0.0",
     "lucide-react": "0.294.0",
+    "framer-motion": "10.16.4",
     "tailwind-merge": "2.0.0",
-    "tailwindcss-animate": "1.0.7",
-    "framer-motion": "10.16.4"
+    "tailwindcss-animate": "1.0.7"
   },
   "devDependencies": {
     "shadcn": "latest",

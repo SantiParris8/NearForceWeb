@@ -23,30 +23,49 @@ jobs:
           rm -rf ./* || true
           rm -rf ./.* || true
 
+      - name: Create package.json
+        run: |
+          echo '{
+            "name": "nearforceweb",
+            "version": "0.1.0",
+            "private": true,
+            "scripts": {
+              "dev": "next dev",
+              "build": "next build",
+              "start": "next start",
+              "lint": "next lint"
+            }
+          }' > package.json
+
+      - name: Install all dependencies first
+        run: |
+          npm install next@13.4.12 react@18.2.0 react-dom@18.2.0
+          npm install class-variance-authority@0.7.0 clsx@2.0.0 tailwind-merge@2.0.0
+          npm install @radix-ui/react-slot@1.0.2
+          npm install framer-motion@10.16.4 lucide-react@0.294.0
+          npm install tailwindcss-animate@1.0.7
+          
+          npm install -D @types/node@20.9.4 @types/react@18.2.38 @types/react-dom@18.2.17
+          npm install -D typescript@5.3.2 autoprefixer@10.4.16 postcss@8.4.31
+          npm install -D tailwindcss@3.3.5 eslint@8.54.0 eslint-config-next@13.4.12
+          npm install -D @types/class-variance-authority
+
       - name: Initialize Next.js
-        run: npx create-next-app nearforceweb --ts --tailwind --eslint --app --no-src-dir --import-alias "@/*" --use-npm --yes
-
-      - name: Move files
-        run: |
-          cp -r nearforceweb/* .
-          cp -r nearforceweb/.* . 2>/dev/null || true
-          rm -rf nearforceweb
-
-      - name: Update package.json
-        run: |
-          npm pkg set name="nearforceweb"
-          # Ensure specific React version
-          npm install react@18.2.0 react-dom@18.2.0 --save --legacy-peer-deps
-
-      - name: Install additional dependencies
-        run: |
-          npm install framer-motion@10.16.4 lucide-react@0.294.0 --save --legacy-peer-deps
-          npm install -D shadcn --legacy-peer-deps
+        run: npx create-next-app@13.4.12 . --ts --tailwind --eslint --app --no-src-dir --import-alias "@/*" --use-npm --yes --overwrite
 
       - name: Create directory structure
         run: |
           mkdir -p lib
           mkdir -p components/ui
+
+      - name: Create utility functions
+        run: |
+          echo 'import { type ClassValue, clsx } from "clsx"
+          import { twMerge } from "tailwind-merge"
+          
+          export function cn(...inputs: ClassValue[]) {
+            return twMerge(clsx(inputs))
+          }' > lib/utils.ts
 
       - name: Setup shadcn configuration
         run: |
@@ -67,21 +86,13 @@ jobs:
             }
           }' > components.json
 
-      - name: Create utility functions
+      - name: Install and setup shadcn
         run: |
-          echo 'import { type ClassValue, clsx } from "clsx"
-          import { twMerge } from "tailwind-merge"
-          
-          export function cn(...inputs: ClassValue[]) {
-            return twMerge(clsx(inputs))
-          }' > lib/utils.ts
-
-      - name: Add UI components
-        run: |
-          npx shadcn@latest add button --yes
-          npx shadcn@latest add card --yes
-          npx shadcn@latest add input --yes
-          npx shadcn@latest add textarea --yes
+          npm install shadcn-ui --save-dev
+          npx shadcn-ui@latest add button --yes
+          npx shadcn-ui@latest add card --yes
+          npx shadcn-ui@latest add input --yes
+          npx shadcn-ui@latest add textarea --yes
 
       - name: Update next.config
         run: |
@@ -93,6 +104,16 @@ jobs:
             basePath: "/NearForceWeb",
             assetPrefix: "/NearForceWeb/",
           }' > next.config.js
+
+      - name: Create basic page
+        run: |
+          echo 'export default function Page() {
+            return (
+              <div className="p-8">
+                <h1 className="text-4xl font-bold">Welcome to NearForce</h1>
+              </div>
+            )
+          }' > app/page.tsx
 
       - name: Build
         run: |

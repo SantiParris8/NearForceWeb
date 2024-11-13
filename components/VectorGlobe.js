@@ -42,11 +42,13 @@ const countries = {
       [45.5, -124.7], [25.8, -97.5], [15.0, -83.9],
       [51.3, -64.0], [83.1, -75.0]
     ],
-    // Europe
+    // Europe (improved outline)
     [
       [71.1, 27.7], [65.9, 19.4], [59.7, 30.3],
-      [45.4, 12.5], [36.5, -9.5], [43.5, -10.0],
-      [58.6, -7.7], [71.1, 27.7]
+      [54.5, 20.5], [51.5, 10.5], [47.4, 12.5],
+      [43.5, 5.5], [41.5, 2.5], [36.5, -9.5],
+      [43.5, -10.0], [50.6, -7.7], [54.6, -3.7],
+      [58.6, -7.7], [62.1, 17.7], [71.1, 27.7]
     ],
     // Africa
     [
@@ -70,34 +72,49 @@ const countries = {
 }
 
 function UruguayFill() {
-  // Create a shape from Uruguay coordinates
-  const shape = new THREE.Shape()
-  const points = countries.uruguay.map(([lat, lon]) => {
-    const vector = latLongToVector3(lat, lon, 1.001)
-    return new THREE.Vector2(vector.x, vector.z)
+  const vertices = []
+  const indices = []
+  let pointIndex = 0
+
+  // Create vertices for the surface
+  countries.uruguay.forEach(([lat, lon]) => {
+    const point = latLongToVector3(lat, lon, 1.001)
+    vertices.push(point.x, point.y, point.z)
   })
-  
-  shape.moveTo(points[0].x, points[0].y)
-  points.forEach((point) => shape.lineTo(point.x, point.y))
-  shape.closePath()
+
+  // Create triangulation
+  for (let i = 1; i < countries.uruguay.length - 1; i++) {
+    indices.push(0, i, i + 1)
+  }
 
   return (
-    <group rotation-y={Math.PI * 0.5} rotation-x={Math.PI * 0.07}>
-      <mesh>
-        <shapeGeometry args={[shape]} />
-        <meshBasicMaterial 
-          color="#2563eb"
-          transparent
-          opacity={0.3}
-          side={THREE.DoubleSide}
-          depthWrite={false}
+    <mesh>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          count={vertices.length / 3}
+          array={new Float32Array(vertices)}
+          itemSize={3}
         />
-      </mesh>
-    </group>
+        <bufferAttribute
+          attach="index"
+          array={new Uint16Array(indices)}
+          count={indices.length}
+          itemSize={1}
+        />
+      </bufferGeometry>
+      <meshBasicMaterial
+        color="#2563eb"
+        transparent
+        opacity={0.3}
+        side={THREE.DoubleSide}
+        depthWrite={false}
+      />
+    </mesh>
   )
 }
 
-// Generate latitude lines
+// Rest of the code remains the same for latitude and longitude lines
 const latitudeLines = Array.from({ length: 19 }, (_, i) => {
   const lat = -90 + i * 10
   return Array.from({ length: 721 }, (_, j) => {
@@ -106,7 +123,6 @@ const latitudeLines = Array.from({ length: 19 }, (_, i) => {
   })
 })
 
-// Generate longitude lines
 const longitudeLines = Array.from({ length: 37 }, (_, i) => {
   const lon = -180 + i * 10
   return Array.from({ length: 361 }, (_, j) => {

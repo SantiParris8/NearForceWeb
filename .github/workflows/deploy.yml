@@ -18,17 +18,18 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Clean workspace
-        run: |
-          rm -rf ./* || true
-          rm -rf ./.* || true
-
       - name: Initialize Next.js
-        run: npx create-next-app@latest . --ts --tailwind --eslint --app --no-src-dir --import-alias "@/*" --use-npm --yes
+        run: npx create-next-app@latest nearforceweb --ts --tailwind --eslint --app --no-src-dir --import-alias "@/*" --use-npm --yes
 
-      - name: Install additional dependencies
+      - name: Move files to root
         run: |
-          npm install framer-motion@10.16.4 lucide-react@0.294.0 --legacy-peer-deps
+          cp -r nearforceweb/* .
+          cp -r nearforceweb/.* . 2>/dev/null || true
+          rm -rf nearforceweb
+
+      - name: Install dependencies
+        run: |
+          npm install framer-motion lucide-react --save
 
       - name: Update next.config
         run: |
@@ -40,31 +41,6 @@ jobs:
             basePath: "/NearForceWeb",
             assetPrefix: "/NearForceWeb/",
           }' > next.config.js
-
-      - name: Create landing page
-        run: |
-          echo 'import { motion } from "framer-motion";
-          
-          export default function Page() {
-            return (
-              <div className="min-h-screen bg-white">
-                <main className="container mx-auto px-4 py-16">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <h1 className="text-5xl font-bold text-center mb-8">
-                      Welcome to <span className="text-blue-600">NearForce</span>
-                    </h1>
-                    <p className="text-xl text-center text-gray-600">
-                      Your trusted Salesforce consulting partner
-                    </p>
-                  </motion.div>
-                </main>
-              </div>
-            );
-          }' > app/page.tsx
 
       - name: Build
         run: |

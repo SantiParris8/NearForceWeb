@@ -114,7 +114,7 @@ export default function Home() {
             >
 <h1 className="text-5xl font-bold leading-tight mb-6">
   Transform Your Business with{' '}
-  <span className="gradient-text-primary animated-gradient">
+  <span className="bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-400 bg-clip-text text-transparent">
     Salesforce Excellence
   </span>
 </h1>

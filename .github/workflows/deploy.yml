@@ -18,24 +18,43 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install dependencies
+      - name: Initialize Next.js
         run: |
-          npm install
+          npx create-next-app@latest . --ts --tailwind --eslint --app --no-src-dir --import-alias "@/*" --use-npm --yes
+
+      - name: Install additional dependencies
+        run: |
+          npm install framer-motion lucide-react
           npm install -D shadcn
 
-      - name: Create directory structure and utils
+      - name: Setup shadcn configuration
         run: |
-          mkdir -p components/ui/lib
+          echo '{
+            "$schema": "https://ui.shadcn.com/schema.json",
+            "style": "default",
+            "rsc": false,
+            "tsx": true,
+            "tailwind": {
+              "config": "tailwind.config.ts",
+              "css": "app/globals.css",
+              "baseColor": "slate",
+              "cssVariables": true
+            },
+            "aliases": {
+              "components": "@/components",
+              "utils": "@/lib/utils"
+            }
+          }' > components.json
+
+      - name: Create utility functions
+        run: |
+          mkdir -p lib
           echo 'import { type ClassValue, clsx } from "clsx"
           import { twMerge } from "tailwind-merge"
           
           export function cn(...inputs: ClassValue[]) {
             return twMerge(clsx(inputs))
-          }' > components/ui/lib/utils.ts
-
-      - name: Initialize shadcn
-        run: |
-          npx shadcn@latest init --yes
+          }' > lib/utils.ts
 
       - name: Add UI components
         run: |
@@ -43,6 +62,20 @@ jobs:
           npx shadcn@latest add card --yes
           npx shadcn@latest add input --yes
           npx shadcn@latest add textarea --yes
+
+      - name: Update next.config
+        run: |
+          echo '/** @type {import("next").NextConfig} */
+          const nextConfig = {
+            output: "export",
+            images: {
+              unoptimized: true,
+            },
+            basePath: "/NearForceWeb",
+            assetPrefix: "/NearForceWeb/",
+          };
+          
+          module.exports = nextConfig;' > next.config.js
 
       - name: Build
         run: |

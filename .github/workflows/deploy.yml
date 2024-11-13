@@ -17,15 +17,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: 'npm'
 
-      - name: Clean install dependencies
+      - name: Install dependencies
         run: |
-          npm install -g create-next-app@14.0.3
-          npm install -g shadcn-ui@0.9.3
-          npm ci
+          npm install
+          npm install -g create-next-app@latest
+          npm install -g shadcn-ui@latest
 
-      - name: Initialize shadcn-ui
+      - name: Setup shadcn-ui
         run: |
           npx shadcn-ui@latest init --yes --skip-font
           npx shadcn-ui@latest add card --yes
@@ -34,7 +33,9 @@ jobs:
           npx shadcn-ui@latest add textarea --yes
 
       - name: Build
-        run: npm run build
+        run: |
+          npm run build
+          touch out/.nojekyll
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

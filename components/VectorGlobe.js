@@ -72,23 +72,33 @@ const countries = {
 }
 
 function UruguayFill() {
+  // Calculate the center point of Uruguay
+  const centerLat = -32.5
+  const centerLon = -56.0
+  const centerPoint = latLongToVector3(centerLat, centerLon, 1.001)
+
+  // Create vertices and faces
   const vertices = []
   const indices = []
-  let pointIndex = 0
-
-  // Create vertices for the surface
+  
+  // Add center point as first vertex
+  vertices.push(centerPoint.x, centerPoint.y, centerPoint.z)
+  
+  // Add border points
   countries.uruguay.forEach(([lat, lon]) => {
     const point = latLongToVector3(lat, lon, 1.001)
     vertices.push(point.x, point.y, point.z)
   })
-
-  // Create triangulation
-  for (let i = 1; i < countries.uruguay.length - 1; i++) {
+  
+  // Create triangles from center to each pair of consecutive border points
+  for (let i = 1; i < countries.uruguay.length; i++) {
     indices.push(0, i, i + 1)
   }
+  // Close the shape
+  indices.push(0, countries.uruguay.length, 1)
 
   return (
-    <mesh>
+    <mesh renderOrder={1}>
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
@@ -114,7 +124,7 @@ function UruguayFill() {
   )
 }
 
-// Rest of the code remains the same for latitude and longitude lines
+// Rest of the code remains the same
 const latitudeLines = Array.from({ length: 19 }, (_, i) => {
   const lat = -90 + i * 10
   return Array.from({ length: 721 }, (_, j) => {
@@ -183,7 +193,7 @@ function Globe() {
         )
       })}
 
-      {/* Uruguay outline and fill */}
+      {/* Uruguay fill and outline */}
       <UruguayFill />
       {(() => {
         const points = countries.uruguay.map(([lat, lon]) => 
@@ -215,7 +225,7 @@ export default function VectorGlobe() {
         <Globe />
         <OrbitControls 
           enableZoom={true}
-          minDistance={1.5}
+          minDistance={3}
           maxDistance={4}
           enablePan={false}
           autoRotate

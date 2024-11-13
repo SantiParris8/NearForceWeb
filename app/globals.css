@@ -75,7 +75,6 @@
   }
 }
 
-/* Additional custom styles */
 .gradient-text {
   @apply bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent;
 }

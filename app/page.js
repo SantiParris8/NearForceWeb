@@ -112,12 +112,12 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="flex-1"
             >
-              <h1 className="text-5xl font-bold leading-tight mb-6">
-                Transform Your Business with{' '}
-                <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
-                  Salesforce Excellence
-                </span>
-              </h1>
+<h1 className="text-5xl font-bold leading-tight mb-6">
+  Transform Your Business with{' '}
+  <span className="gradient-text-primary animated-gradient">
+    Salesforce Excellence
+  </span>
+</h1>
               <p className="text-xl text-gray-600 mb-8">
                 Partner with the leading Salesforce consultancy to unlock your business potential.
               </p>
@@ -145,19 +145,19 @@ export default function Home() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {statsData.map(({ id, stat, label, icon: Icon }) => (
-              <Card key={id} className="p-6">
-                <div className="space-y-1">
-                  <div className="flex items-center space-x-2">
-                    <Icon className="w-6 h-6 text-blue-600" />
-                    <h3 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
-                      {stat}
-                    </h3>
-                  </div>
-                  <p className="text-gray-600">{label}</p>
-                </div>
-              </Card>
-            ))}
+          {statsData.map(({ id, stat, label, icon: Icon }) => (
+  <Card key={id} gradient className="p-6">
+    <div className="space-y-1">
+      <div className="flex items-center space-x-2">
+        <Icon className="w-6 h-6 text-blue-500" />
+        <h3 className="text-4xl font-bold gradient-text-primary">
+          {stat}
+        </h3>
+      </div>
+      <p className="text-gray-600">{label}</p>
+    </div>
+  </Card>
+))}
           </div>
         </div>
       </section>

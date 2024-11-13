@@ -7,16 +7,15 @@ import Image from 'next/image';
 
 // Simplified Components
 const Button = ({ children, className = '', variant = 'default', ...props }) => {
-  const baseStyles = 'px-4 py-2 rounded-lg font-medium transition-colors';
   const variants = {
-    default: 'bg-blue-600 text-white hover:bg-blue-700',
-    ghost: 'text-gray-600 hover:bg-gray-100',
-    outline: 'border border-gray-300 hover:bg-gray-50'
+    default: 'button-primary',
+    ghost: 'button-ghost',
+    outline: 'button-outline'
   };
   
   return (
     <button 
-      className={`${baseStyles} ${variants[variant]} ${className}`}
+      className={`${variants[variant]} ${className}`}
       {...props}
     >
       {children}
@@ -24,22 +23,30 @@ const Button = ({ children, className = '', variant = 'default', ...props }) => 
   );
 };
 
-const Card = ({ children, className = '', ...props }) => (
-  <div className={`bg-white rounded-lg shadow-lg ${className}`} {...props}>
+const Card = ({ children, className = '', gradient = false, ...props }) => (
+  <div 
+    className={`
+      ${gradient ? 'card-gradient' : 'bg-white'} 
+      rounded-xl shadow-custom hover:shadow-xl 
+      transition-all duration-300 
+      ${className}
+    `} 
+    {...props}
+  >
     {children}
   </div>
 );
 
 const Input = ({ className = '', ...props }) => (
   <input
-    className={`w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${className}`}
+    className={`input-base ${className}`}
     {...props}
   />
 );
 
 const Textarea = ({ className = '', ...props }) => (
   <textarea
-    className={`w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[100px] ${className}`}
+    className={`input-base min-h-[100px] ${className}`}
     {...props}
   />
 );

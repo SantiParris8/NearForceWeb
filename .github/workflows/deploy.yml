@@ -19,18 +19,22 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install
-
-      - name: Setup Next.js
         run: |
-          npx shadcn-ui@latest init --yes
-          npx shadcn-ui@latest add card button input textarea --yes
+          npm install
+          npm install -g create-next-app@latest
+          npm install -g shadcn-ui@latest
+          npm install @radix-ui/react-icons
+
+      - name: Initialize shadcn-ui
+        run: |
+          npx shadcn-ui@latest init --yes --skip-font
+          npx shadcn-ui@latest add card --yes
+          npx shadcn-ui@latest add button --yes
+          npx shadcn-ui@latest add input --yes
+          npx shadcn-ui@latest add textarea --yes
 
       - name: Build
         run: npm run build
-
-      - name: Export
-        run: npx next export || npm run build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
-          npm install -D @shadcn/ui
+          npm install -D shadcn
 
       - name: Create directory structure and utils
         run: |
@@ -33,13 +33,16 @@ jobs:
             return twMerge(clsx(inputs))
           }' > components/ui/lib/utils.ts
 
+      - name: Initialize shadcn
+        run: |
+          npx shadcn@latest init --yes
+
       - name: Add UI components
         run: |
-          # Create components
-          npx --yes shadcn-ui@latest add button
-          npx --yes shadcn-ui@latest add card
-          npx --yes shadcn-ui@latest add input
-          npx --yes shadcn-ui@latest add textarea
+          npx shadcn@latest add button --yes
+          npx shadcn@latest add card --yes
+          npx shadcn@latest add input --yes
+          npx shadcn@latest add textarea --yes
 
       - name: Build
         run: |

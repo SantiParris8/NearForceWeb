@@ -18,14 +18,33 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Clean workspace
+        run: |
+          rm -rf ./* || true
+          rm -rf ./.* || true
+
       - name: Initialize Next.js
         run: |
-          npx create-next-app@latest . --ts --tailwind --eslint --app --no-src-dir --import-alias "@/*" --use-npm --yes
+          npx create-next-app@latest . \
+            --ts \
+            --tailwind \
+            --eslint \
+            --app \
+            --no-src-dir \
+            --import-alias "@/*" \
+            --use-npm \
+            --yes \
+            --project-name "nearforceweb"
 
       - name: Install additional dependencies
         run: |
           npm install framer-motion lucide-react
           npm install -D shadcn
+
+      - name: Create directory structure
+        run: |
+          mkdir -p lib
+          mkdir -p components/ui
 
       - name: Setup shadcn configuration
         run: |
@@ -48,7 +67,6 @@ jobs:
 
       - name: Create utility functions
         run: |
-          mkdir -p lib
           echo 'import { type ClassValue, clsx } from "clsx"
           import { twMerge } from "tailwind-merge"
           
@@ -76,6 +94,16 @@ jobs:
           };
           
           module.exports = nextConfig;' > next.config.js
+
+      - name: Copy your page content
+        run: |
+          echo 'export default function Page() {
+            return <div>Hello World</div>
+          }' > app/page.tsx
+
+      - name: Update package.json name
+        run: |
+          npm pkg set name="nearforceweb"
 
       - name: Build
         run: |

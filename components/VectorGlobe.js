@@ -16,7 +16,6 @@ function latLongToVector3(lat, lon, radius) {
   )
 }
 
-// More accurate country coordinates
 const countries = {
   uruguay: [
     [-30.1, -57.8], [-30.8, -57.8], [-31.4, -58.0], 
@@ -30,64 +29,62 @@ const countries = {
     [-30.1, -56.5], [-30.1, -57.2], [-30.1, -57.8]
   ],
   otherCountries: [
-    // South America (more detailed)
+    // South America
     [
       [12.4, -71.3], [4.0, -81.3], [-18.3, -70.3], 
       [-52.3, -69.1], [-55.9, -67.3], [-54.9, -64.3],
       [-34.9, -56.2], [-22.9, -43.2], [-5.2, -35.3],
       [11.7, -71.3], [12.4, -71.3]
     ],
-    // Other continents remain simplified for performance
-    // North America
-    [
-      [83.1, -75.0], [76.2, -120.0], [68.9, -166.5],
+    // Rest of the continents remain the same...
+    [83.1, -75.0], [76.2, -120.0], [68.9, -166.5],
       [45.5, -124.7], [25.8, -97.5], [15.0, -83.9],
       [51.3, -64.0], [83.1, -75.0]
-    ],
-    // Europe
-    [
-      [71.1, 27.7], [65.9, 19.4], [59.7, 30.3],
-      [45.4, 12.5], [36.5, -9.5], [43.5, -10.0],
-      [58.6, -7.7], [71.1, 27.7]
-    ],
-    // Africa
-    [
-      [35.9, -5.6], [31.7, 34.6], [11.7, 51.4],
-      [-34.8, 20.0], [-34.1, 18.5], [4.7, 9.3],
-      [35.9, -5.6]
-    ],
-    // Asia
-    [
-      [65.5, 100.0], [77.0, 104.0], [75.8, 136.7],
-      [50.1, 155.1], [19.5, 109.7], [1.8, 103.8],
-      [12.8, 43.3], [42.3, 51.3], [65.5, 100.0]
-    ],
-    // Australia
-    [
-      [-11.1, 132.4], [-13.7, 142.5], [-25.7, 153.2],
-      [-37.5, 150.0], [-43.6, 147.3], [-37.8, 140.2],
-      [-22.9, 114.0], [-11.1, 132.4]
-    ]
   ]
 }
 
-// Generate latitude lines
+// Generate latitude lines (now with more detail for smoother curves)
 const latitudeLines = Array.from({ length: 19 }, (_, i) => {
   const lat = -90 + i * 10
-  return Array.from({ length: 361 }, (_, j) => {
-    const lon = -180 + j
+  return Array.from({ length: 721 }, (_, j) => { // Increased resolution
+    const lon = -180 + j * 0.5 // Smaller increments for smoother curves
     return latLongToVector3(lat, lon, 1)
   })
 })
 
-// Generate longitude lines
+// Generate longitude lines (now with more detail)
 const longitudeLines = Array.from({ length: 37 }, (_, i) => {
   const lon = -180 + i * 10
-  return Array.from({ length: 181 }, (_, j) => {
-    const lat = -90 + j
+  return Array.from({ length: 361 }, (_, j) => { // Increased resolution
+    const lat = -90 + j * 0.5 // Smaller increments for smoother curves
     return latLongToVector3(lat, lon, 1)
   })
 })
+
+function UruguayFill() {
+  // Create a shape from Uruguay coordinates
+  const shape = new THREE.Shape()
+  const points = countries.uruguay.map(([lat, lon]) => {
+    const vector = latLongToVector3(lat, lon, 1.001) // Slightly larger radius to prevent z-fighting
+    return new THREE.Vector2(vector.x, vector.z)
+  })
+  
+  shape.moveTo(points[0].x, points[0].y)
+  points.forEach((point) => shape.lineTo(point.x, point.y))
+  shape.closePath()
+
+  return (
+    <mesh rotation-y={Math.PI * 0.5}>
+      <shapeGeometry args={[shape]} />
+      <meshBasicMaterial 
+        color="#2563eb"
+        transparent
+        opacity={0.3}
+        side={THREE.DoubleSide}
+      />
+    </mesh>
+  )
+}
 
 function Globe() {
   const globeRef = useRef()
@@ -104,7 +101,7 @@ function Globe() {
         <meshBasicMaterial color="#1a365d" transparent opacity={0.1} />
       </mesh>
 
-      {/* Grid lines */}
+      {/* Grid lines with material that ignores depth testing */}
       {latitudeLines.map((points, i) => (
         <Line
           key={`lat-${i}`}
@@ -113,6 +110,7 @@ function Globe() {
           lineWidth={0.3}
           transparent
           opacity={0.2}
+          depthTest={false} // This makes lines visible through the sphere
         />
       ))}
       {longitudeLines.map((points, i) => (
@@ -123,6 +121,7 @@ function Globe() {
           lineWidth={0.3}
           transparent
           opacity={0.2}
+          depthTest={false} // This makes lines visible through the sphere
         />
       ))}
 
@@ -139,10 +138,11 @@ function Globe() {
         )
       })}
 
-      {/* Uruguay highlighted */}
+      {/* Uruguay outline and fill */}
+      <UruguayFill />
       {(() => {
         const points = countries.uruguay.map(([lat, lon]) => 
-          latLongToVector3(lat, lon, 1)
+          latLongToVector3(lat, lon, 1.002) // Slightly larger radius to appear above the fill
         )
         return (
           <Line

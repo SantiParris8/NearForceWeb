@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2, Users, BarChart3, MessageSquare } from 'lucide-react';
 import Image from 'next/image';
-import Globe from '@/components/Globe'
+import VectorGlobe from '@/components/VectorGlobe'
 import ParticleBackground from '@/components/ParticleBackground'
 import DynamicStats from '@/components/DynamicStats'
 
@@ -141,7 +141,7 @@ export default function Home() {
               </div>
             </motion.div>
             <div className="flex-1 relative h-96">
-            <Globe />
+            <VectorGlobe />
             </div>
           </div>
         </div>

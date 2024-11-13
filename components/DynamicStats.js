@@ -1,36 +1,63 @@
 'use client'
 
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
+import { useRef, useState, useEffect } from 'react'
 
-export default function DynamicStats({ stat, label, icon: Icon }) {
-  const elementRef = useRef(null)
-  const { scrollYProgress } = useScroll({
-    target: elementRef,
-    offset: ["start end", "end start"]
-  })
+function CountUp({ end, duration = 2 }) {
+  const [count, setCount] = useState(0)
+  const [isVisible, setIsVisible] = useState(false)
+  const countRef = useRef(null)
+  const isInView = useInView(countRef, { once: true })
 
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100])
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.9, 1], [0, 1, 1, 0])
+  useEffect(() => {
+    if (isInView && !isVisible) {
+      setIsVisible(true)
+      let startTime = null
+      const endNum = parseFloat(end.replace(/[^0-9.-]+/g, ""))
+      
+      const animate = (currentTime) => {
+        if (!startTime) startTime = currentTime
+        const progress = (currentTime - startTime) / (duration * 1000)
+        
+        if (progress < 1) {
+          const currentCount = Math.round(endNum * progress)
+          setCount(currentCount)
+          requestAnimationFrame(animate)
+        } else {
+          setCount(endNum)
+        }
+      }
+      
+      requestAnimationFrame(animate)
+    }
+  }, [end, duration, isInView, isVisible])
 
   return (
+    <span ref={countRef}>
+      {end.startsWith('$') ? '$' : ''}
+      {count}
+      {end.endsWith('%') ? '%' : ''}
+      {end.endsWith('+') ? '+' : ''}
+    </span>
+  )
+}
+
+export default function DynamicStats({ stat, label, icon: Icon }) {
+  return (
     <motion.div
-      ref={elementRef}
-      style={{ y, opacity }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
       className="relative"
     >
       <div className="card-gradient p-6 relative overflow-hidden">
         <div className="relative z-10 space-y-1">
           <div className="flex items-center space-x-2">
             <Icon className="w-6 h-6 text-blue-500" />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="text-4xl font-bold bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-400 bg-clip-text text-transparent"
-            >
-              {stat}
-            </motion.div>
+            <h3 className="text-4xl font-bold bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-400 bg-clip-text text-transparent">
+              <CountUp end={stat} />
+            </h3>
           </div>
           <p className="text-gray-600">{label}</p>
         </div>

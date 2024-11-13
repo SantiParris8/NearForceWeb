@@ -1,54 +1,48 @@
-name: Deploy to GitHub Pages
+name: Deploy Next.js site to Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: ["main"]
   workflow_dispatch:
 
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
-
-      - name: Initialize Next.js
-        run: npx create-next-app@latest nearforceweb --ts --tailwind --eslint --app --no-src-dir --import-alias "@/*" --use-npm --yes
-
-      - name: Move files to root
-        run: |
-          cp -r nearforceweb/* .
-          cp -r nearforceweb/.* . 2>/dev/null || true
-          rm -rf nearforceweb
-
+          node-version: "20"
+          cache: 'npm'
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
       - name: Install dependencies
-        run: |
-          npm install framer-motion lucide-react --save
-
-      - name: Update next.config
-        run: |
-          echo 'module.exports = {
-            output: "export",
-            images: {
-              unoptimized: true,
-            },
-            basePath: "/NearForceWeb",
-            assetPrefix: "/NearForceWeb/",
-          }' > next.config.js
-
-      - name: Build
-        run: |
-          npm run build
-          touch out/.nojekyll
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        run: npm install
+      - name: Build with Next.js
+        run: npm run build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out
+          path: ./out
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -52,6 +52,15 @@ const Textarea = ({ className = '', ...props }) => (
 );
 
 export default function Home() {
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+
   const statsData = [
     { id: 1, stat: '500+', label: 'Enterprise Clients', icon: Users },
     { id: 2, stat: '98%', label: 'Client Retention', icon: CheckCircle2 },
@@ -93,10 +102,9 @@ export default function Home() {
               />
             </div>
             <div className="hidden md:flex space-x-8">
-              <Button variant="ghost">Solutions</Button>
-              <Button variant="ghost">Services</Button>
-              <Button variant="ghost">About</Button>
-              <Button variant="ghost">Contact</Button>
+              <Button variant="ghost" onClick={() => scrollToSection('services')}>Services</Button>
+              <Button variant="ghost" onClick={() => scrollToSection('about')}>About</Button>
+              <Button variant="ghost" onClick={() => scrollToSection('contact')}>Contact</Button>
             </div>
           </div>
         </div>
@@ -163,7 +171,7 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section className="py-20 bg-gray-50">
+      <section id="services" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold">Our Services</h2>
@@ -195,55 +203,116 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Contact Form */}
-      <section className="py-20">
+      <section id="about" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Card className="w-full max-w-lg mx-auto p-6">
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold mb-2">Get in Touch</h2>
-              <p className="text-gray-600">
-                Let's discuss how we can transform your business with Salesforce
-              </p>
+          <div className="flex flex-col md:flex-row items-center gap-12">
+            <div className="flex-1">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <h2 className="text-3xl font-bold mb-6">About NearForce</h2>
+                <p className="text-gray-600 mb-6">
+                  At NearForce, we're more than just a Salesforce consulting firm. We're your partners in digital transformation, 
+                  committed to delivering exceptional CRM solutions that drive business growth and innovation.
+                </p>
+                <p className="text-gray-600 mb-6">
+                  With over a decade of experience and hundreds of successful implementations, our team of certified experts 
+                  brings unparalleled expertise to every project. We understand that each business is unique, which is why 
+                  we take a customized approach to every solution we deliver.
+                </p>
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-semibold text-blue-600">Our Mission</h3>
+                    <p className="text-gray-600">
+                      To empower businesses with innovative Salesforce solutions that drive growth and success.
+                    </p>
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-semibold text-blue-600">Our Vision</h3>
+                    <p className="text-gray-600">
+                      To be the most trusted name in Salesforce consulting, known for excellence and innovation.
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
             </div>
-            <form action="https://formsubmit.co/your-email@example.com" method="POST" className="space-y-4">
-              <input type="hidden" name="_next" value="https://yoursite.com/thanks" />
-              <input type="hidden" name="_subject" value="New NearForce Contact!" />
-              <input type="hidden" name="_captcha" value="false" />
-              
-              <div>
-                <Input 
-                  name="name"
-                  placeholder="Full Name" 
-                  required 
-                />
-              </div>
-              <div>
-                <Input 
-                  type="email" 
-                  name="email"
-                  placeholder="Email" 
-                  required 
-                />
-              </div>
-              <div>
-                <Input 
-                  name="company"
-                  placeholder="Company" 
-                  required 
-                />
-              </div>
-              <div>
-                <Textarea 
-                  name="message"
-                  placeholder="Tell us about your project" 
-                  required 
-                />
-              </div>
-              <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-cyan-500">
-                Submit
-              </Button>
-            </form>
-          </Card>
+            <div className="flex-1 relative h-[500px]">
+              <Image
+                src="/api/placeholder/600/500"
+                alt="About Us Image"
+                layout="fill"
+                objectFit="cover"
+                className="rounded-lg"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Form */}
+      <section id="contact" className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center gap-12">
+            <div className="flex-1 relative h-[600px]">
+              <Image
+                src="/api/placeholder/800/600"
+                alt="Contact Image"
+                layout="fill"
+                objectFit="cover"
+                className="rounded-lg"
+              />
+            </div>
+            <div className="flex-1">
+              <Card className="p-6">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold mb-2">Get in Touch</h2>
+                  <p className="text-gray-600">
+                    Let's discuss how we can transform your business with Salesforce
+                  </p>
+                </div>
+                <form action="https://formsubmit.co/your-email@example.com" method="POST" className="space-y-4">
+                  <input type="hidden" name="_next" value="https://yoursite.com/thanks" />
+                  <input type="hidden" name="_subject" value="New NearForce Contact!" />
+                  <input type="hidden" name="_captcha" value="false" />
+                  
+                  <div>
+                    <Input 
+                      name="name"
+                      placeholder="Full Name" 
+                      required 
+                    />
+                  </div>
+                  <div>
+                    <Input 
+                      type="email" 
+                      name="email"
+                      placeholder="Email" 
+                      required 
+                    />
+                  </div>
+                  <div>
+                    <Input 
+                      name="company"
+                      placeholder="Company" 
+                      required 
+                    />
+                  </div>
+                  <div>
+                    <Textarea 
+                      name="message"
+                      placeholder="Tell us about your project" 
+                      required 
+                    />
+                  </div>
+                  <Button type="submit" className="w-full bg-gradient-to-br from-blue-600 to-cyan-400">
+                    Submit
+                  </Button>
+                </form>
+              </Card>
+            </div>
+          </div>
         </div>
       </section>
 

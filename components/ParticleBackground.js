@@ -17,14 +17,15 @@ export default function ParticleBackground() {
       canvas.height = window.innerHeight
     }
 
-    window.addEventListener('resize', setCanvasSize)
-    setCanvasSize()
-
-    // Handle mouse movement
-    window.addEventListener('mousemove', (e) => {
+    // Store the mousemove handler in a named function
+    const handleMouseMove = (e) => {
       mouse.x = e.clientX
       mouse.y = e.clientY
-    })
+    }
+
+    window.addEventListener('resize', setCanvasSize)
+    window.addEventListener('mousemove', handleMouseMove)
+    setCanvasSize()
 
     class Particle {
       constructor() {
@@ -115,7 +116,7 @@ export default function ParticleBackground() {
 
     return () => {
       window.removeEventListener('resize', setCanvasSize)
-      window.removeEventListener('mousemove', null)
+      window.removeEventListener('mousemove', handleMouseMove) // Now properly removes the event listener
       cancelAnimationFrame(animationFrameId)
     }
   }, [])

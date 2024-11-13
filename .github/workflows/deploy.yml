@@ -24,17 +24,13 @@ jobs:
           rm -rf ./.* || true
 
       - name: Initialize Next.js
+        run: npx create-next-app nearforceweb --ts --tailwind --eslint --app --no-src-dir --import-alias "@/*" --use-npm --yes
+
+      - name: Move files to root
         run: |
-          npx create-next-app@latest . \
-            --ts \
-            --tailwind \
-            --eslint \
-            --app \
-            --no-src-dir \
-            --import-alias "@/*" \
-            --use-npm \
-            --yes \
-            --project-name "nearforceweb"
+          mv nearforceweb/* .
+          mv nearforceweb/.* . || true
+          rm -rf nearforceweb
 
       - name: Install additional dependencies
         run: |
@@ -83,26 +79,20 @@ jobs:
 
       - name: Update next.config
         run: |
-          echo '/** @type {import("next").NextConfig} */
-          const nextConfig = {
+          echo 'module.exports = {
             output: "export",
             images: {
               unoptimized: true,
             },
             basePath: "/NearForceWeb",
             assetPrefix: "/NearForceWeb/",
-          };
-          
-          module.exports = nextConfig;' > next.config.js
+          }' > next.config.js
 
-      - name: Copy your page content
+      - name: Verify package.json
         run: |
-          echo 'export default function Page() {
-            return <div>Hello World</div>
-          }' > app/page.tsx
-
-      - name: Update package.json name
-        run: |
+          if [ ! -f "package.json" ]; then
+            echo '{"name":"nearforceweb","version":"0.1.0","private":true}' > package.json
+          fi
           npm pkg set name="nearforceweb"
 
       - name: Build

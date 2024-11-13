@@ -17,13 +17,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+          cache: 'npm'
 
-      - name: Install dependencies
+      - name: Clean install dependencies
         run: |
-          npm install
-          npm install -g create-next-app@latest
-          npm install -g shadcn-ui@latest
-          npm install @radix-ui/react-icons
+          npm install -g create-next-app@14.0.3
+          npm install -g shadcn-ui@0.9.3
+          npm ci
 
       - name: Initialize shadcn-ui
         run: |

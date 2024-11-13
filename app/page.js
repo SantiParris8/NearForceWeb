@@ -2,12 +2,47 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Globe2, ArrowRight, CheckCircle2, Users, BarChart3, MessageSquare } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { ArrowRight, CheckCircle2, Users, BarChart3, MessageSquare } from 'lucide-react';
 import Image from 'next/image';
+
+// Simplified Components
+const Button = ({ children, className = '', variant = 'default', ...props }) => {
+  const baseStyles = 'px-4 py-2 rounded-lg font-medium transition-colors';
+  const variants = {
+    default: 'bg-blue-600 text-white hover:bg-blue-700',
+    ghost: 'text-gray-600 hover:bg-gray-100',
+    outline: 'border border-gray-300 hover:bg-gray-50'
+  };
+  
+  return (
+    <button 
+      className={`${baseStyles} ${variants[variant]} ${className}`}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
+
+const Card = ({ children, className = '', ...props }) => (
+  <div className={`bg-white rounded-lg shadow-lg ${className}`} {...props}>
+    {children}
+  </div>
+);
+
+const Input = ({ className = '', ...props }) => (
+  <input
+    className={`w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${className}`}
+    {...props}
+  />
+);
+
+const Textarea = ({ className = '', ...props }) => (
+  <textarea
+    className={`w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[100px] ${className}`}
+    {...props}
+  />
+);
 
 export default function Home() {
   const statsData = [
@@ -21,17 +56,17 @@ export default function Home() {
     {
       title: 'Salesforce Implementation',
       description: 'End-to-end implementation services tailored to your business needs.',
-      image: '/images/services/implementation.jpg',
+      image: '/api/placeholder/400/320',
     },
     {
       title: 'Custom Development',
       description: 'Bespoke solutions and integrations that extend Salesforce capabilities.',
-      image: '/images/services/development.jpg',
+      image: '/api/placeholder/400/320',
     },
     {
       title: 'Consulting & Strategy',
       description: 'Strategic guidance to maximize your Salesforce ROI.',
-      image: '/images/services/consulting.jpg',
+      image: '/api/placeholder/400/320',
     },
   ];
 
@@ -43,7 +78,7 @@ export default function Home() {
           <div className="flex justify-between h-16 items-center">
             <div className="flex-shrink-0">
               <Image
-                src="/images/logo.png"
+                src="/api/placeholder/150/40"
                 alt="NearForce Logo"
                 width={150}
                 height={40}
@@ -80,7 +115,7 @@ export default function Home() {
                 Partner with the leading Salesforce consultancy to unlock your business potential.
               </p>
               <div className="flex gap-4">
-                <Button className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white">
+                <Button className="bg-gradient-to-r from-blue-600 to-cyan-500">
                   Get Started
                 </Button>
                 <Button variant="outline">Watch Demo</Button>
@@ -88,7 +123,7 @@ export default function Home() {
             </motion.div>
             <div className="flex-1 relative h-96">
               <Image
-                src="/images/hero.jpg"
+                src="/api/placeholder/800/600"
                 alt="Hero Image"
                 layout="fill"
                 objectFit="contain"
@@ -104,18 +139,16 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {statsData.map(({ id, stat, label, icon: Icon }) => (
-              <Card key={id} className="border-none shadow-lg">
-                <CardHeader className="space-y-1">
+              <Card key={id} className="p-6">
+                <div className="space-y-1">
                   <div className="flex items-center space-x-2">
                     <Icon className="w-6 h-6 text-blue-600" />
-                    <CardTitle className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+                    <h3 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
                       {stat}
-                    </CardTitle>
+                    </h3>
                   </div>
-                </CardHeader>
-                <CardContent>
                   <p className="text-gray-600">{label}</p>
-                </CardContent>
+                </div>
               </Card>
             ))}
           </div>
@@ -133,7 +166,7 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="overflow-hidden border-none shadow-lg transition-all hover:shadow-xl">
+              <Card key={index} className="overflow-hidden transition-all hover:shadow-xl">
                 <div className="relative w-full h-48">
                   <Image
                     src={service.image}
@@ -142,17 +175,13 @@ export default function Home() {
                     objectFit="cover"
                   />
                 </div>
-                <CardHeader>
-                  <CardTitle className="text-xl font-semibold">{service.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600">{service.description}</p>
-                </CardContent>
-                <CardFooter>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+                  <p className="text-gray-600 mb-4">{service.description}</p>
                   <Button variant="ghost" className="text-blue-600 hover:text-blue-700">
                     Learn more <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
-                </CardFooter>
+                </div>
               </Card>
             ))}
           </div>
@@ -162,30 +191,51 @@ export default function Home() {
       {/* Contact Form */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Card className="w-full max-w-lg mx-auto border-none shadow-lg">
-            <CardHeader>
-              <CardTitle>Get in Touch</CardTitle>
-              <CardDescription>
+          <Card className="w-full max-w-lg mx-auto p-6">
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold mb-2">Get in Touch</h2>
+              <p className="text-gray-600">
                 Let's discuss how we can transform your business with Salesforce
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Input placeholder="Full Name" />
+              </p>
+            </div>
+            <form action="https://formsubmit.co/your-email@example.com" method="POST" className="space-y-4">
+              <input type="hidden" name="_next" value="https://yoursite.com/thanks" />
+              <input type="hidden" name="_subject" value="New NearForce Contact!" />
+              <input type="hidden" name="_captcha" value="false" />
+              
+              <div>
+                <Input 
+                  name="name"
+                  placeholder="Full Name" 
+                  required 
+                />
               </div>
-              <div className="space-y-2">
-                <Input type="email" placeholder="Email" />
+              <div>
+                <Input 
+                  type="email" 
+                  name="email"
+                  placeholder="Email" 
+                  required 
+                />
               </div>
-              <div className="space-y-2">
-                <Input placeholder="Company" />
+              <div>
+                <Input 
+                  name="company"
+                  placeholder="Company" 
+                  required 
+                />
               </div>
-              <div className="space-y-2">
-                <Textarea placeholder="Tell us about your project" />
+              <div>
+                <Textarea 
+                  name="message"
+                  placeholder="Tell us about your project" 
+                  required 
+                />
               </div>
-              <Button className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white">
+              <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-cyan-500">
                 Submit
               </Button>
-            </CardContent>
+            </form>
           </Card>
         </div>
       </section>

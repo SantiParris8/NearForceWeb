@@ -164,7 +164,7 @@ function Globe() {
 
 export default function VectorGlobe() {
   return (
-    <div className="h-[600px] w-full">
+    <div className="h-[500px] w-[500px]">
       <Canvas camera={{ position: [0, 0, 2.5], fov: 45 }}>
         <ambientLight intensity={1.5} />
         <Globe />

@@ -21,16 +21,25 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
-          npm install -g create-next-app@latest
-          npm install -g shadcn-ui@latest
+          npm install -D @shadcn/ui
 
-      - name: Setup shadcn-ui
+      - name: Create directory structure and utils
         run: |
-          npx shadcn-ui@latest init --yes --skip-font
-          npx shadcn-ui@latest add card --yes
-          npx shadcn-ui@latest add button --yes
-          npx shadcn-ui@latest add input --yes
-          npx shadcn-ui@latest add textarea --yes
+          mkdir -p components/ui/lib
+          echo 'import { type ClassValue, clsx } from "clsx"
+          import { twMerge } from "tailwind-merge"
+          
+          export function cn(...inputs: ClassValue[]) {
+            return twMerge(clsx(inputs))
+          }' > components/ui/lib/utils.ts
+
+      - name: Add UI components
+        run: |
+          # Create components
+          npx --yes shadcn-ui@latest add button
+          npx --yes shadcn-ui@latest add card
+          npx --yes shadcn-ui@latest add input
+          npx --yes shadcn-ui@latest add textarea
 
       - name: Build
         run: |

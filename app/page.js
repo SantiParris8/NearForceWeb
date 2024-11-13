@@ -93,7 +93,7 @@ export default function Home() {
     <div className="min-h-screen bg-white">
       <ParticleBackground />
       {/* Navigation */}
-      <nav className="fixed w-full backdrop-blur-md bg-white/70 z-50 border-b border-white/20">
+      <nav className="fixed w-full bg-white/80 backdrop-blur-md z-50 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <div className="flex-shrink-0">
@@ -115,54 +115,53 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20">
+      <section className="pt-32 pb-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="flex-1 backdrop-blur-sm bg-white/50 p-8 rounded-2xl"
+              className="flex-1"
             >
-              <h1 className="text-5xl font-bold leading-tight mb-6">
-                Transform Your Business with{' '}
-                <span className="bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-400 bg-clip-text text-transparent">
-                  Salesforce Excellence
-                </span>
-              </h1>
+<h1 className="text-5xl font-bold leading-tight mb-6">
+  Transform Your Business with{' '}
+  <span className="bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-400 bg-clip-text text-transparent">
+    Salesforce Excellence
+  </span>
+</h1>
               <p className="text-xl text-gray-600 mb-8">
                 Partner with the leading Salesforce consultancy to unlock your business potential.
               </p>
               <div className="flex gap-4">
-                <Button className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:opacity-90">
+                <Button className="bg-gradient-to-r from-blue-600 to-cyan-500">
                   Get Started
                 </Button>
-                <Button variant="outline" className="backdrop-blur-md bg-white/50 border-white">Watch Demo</Button>
+                <Button variant="outline">Watch Demo</Button>
               </div>
             </motion.div>
             <div className="flex-1 relative h-96">
-              <VectorGlobe />
+            <VectorGlobe />
             </div>
           </div>
         </div>
       </section>
 
+      {/* Stats Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {statsData.map((data) => (
-              <div key={data.id} className="backdrop-blur-md bg-white/40 p-6 rounded-xl border border-white/20 shadow-lg hover:bg-white/50 transition-all duration-300">
-                <DynamicStats {...data} />
-              </div>
-            ))}
+          {statsData.map((data) => (
+    <DynamicStats key={data.id} {...data} />
+  ))}
           </div>
         </div>
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-20">
+      <section id="services" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 backdrop-blur-md bg-white/30 p-8 rounded-2xl">
+          <div className="text-center mb-16">
             <h2 className="text-3xl font-bold">Our Services</h2>
             <p className="text-gray-600 mt-4">
               Comprehensive Salesforce solutions tailored to your needs
@@ -170,7 +169,7 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="backdrop-blur-md bg-white/40 overflow-hidden transition-all hover:bg-white/60 border border-white/20">
+              <Card key={index} className="overflow-hidden transition-all hover:shadow-xl">
                 <div className="relative w-full h-48">
                   <Image
                     src={service.image}
@@ -193,7 +192,6 @@ export default function Home() {
       </section>
 
 
-
       <div className="relative">
       <motion.div
     animate={{
@@ -207,7 +205,7 @@ export default function Home() {
     }}
     className="absolute -top-10 -right-10 w-20 h-20 bg-blue-500/10 rounded-full blur-xl"
   />
- <section id="about" className="py-20">
+      <section id="about" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="flex-1">
@@ -215,9 +213,31 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="backdrop-blur-md bg-white/40 p-8 rounded-2xl border border-white/20"
               >
-                {/* About content remains the same */}
+                <h2 className="text-3xl font-bold mb-6">About NearForce</h2>
+                <p className="text-gray-600 mb-6">
+                  At NearForce, we're more than just a Salesforce consulting firm. We're your partners in digital transformation, 
+                  committed to delivering exceptional CRM solutions that drive business growth and innovation.
+                </p>
+                <p className="text-gray-600 mb-6">
+                  With over a decade of experience and hundreds of successful implementations, our team of certified experts 
+                  brings unparalleled expertise to every project. We understand that each business is unique, which is why 
+                  we take a customized approach to every solution we deliver.
+                </p>
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-semibold text-blue-600">Our Mission</h3>
+                    <p className="text-gray-600">
+                      To empower businesses with innovative Salesforce solutions that drive growth and success.
+                    </p>
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-semibold text-blue-600">Our Vision</h3>
+                    <p className="text-gray-600">
+                      To be the most trusted name in Salesforce consulting, known for excellence and innovation.
+                    </p>
+                  </div>
+                </div>
               </motion.div>
             </div>
             <div className="flex-1 relative h-[500px]">
@@ -235,7 +255,7 @@ export default function Home() {
       </div>
 
       {/* Contact Form */}
-      <section id="contact" className="py-20">
+      <section id="contact" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="flex-1 relative h-[600px]">
@@ -248,8 +268,51 @@ export default function Home() {
               />
             </div>
             <div className="flex-1">
-              <Card className="backdrop-blur-xl bg-white/60 p-6 border border-white/20">
-                {/* Contact form content remains the same */}
+              <Card className="p-6">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold mb-2">Get in Touch</h2>
+                  <p className="text-gray-600">
+                    Let's discuss how we can transform your business with Salesforce
+                  </p>
+                </div>
+                <form action="https://formsubmit.co/your-email@example.com" method="POST" className="space-y-4">
+                  <input type="hidden" name="_next" value="https://yoursite.com/thanks" />
+                  <input type="hidden" name="_subject" value="New NearForce Contact!" />
+                  <input type="hidden" name="_captcha" value="false" />
+                  
+                  <div>
+                    <Input 
+                      name="name"
+                      placeholder="Full Name" 
+                      required 
+                    />
+                  </div>
+                  <div>
+                    <Input 
+                      type="email" 
+                      name="email"
+                      placeholder="Email" 
+                      required 
+                    />
+                  </div>
+                  <div>
+                    <Input 
+                      name="company"
+                      placeholder="Company" 
+                      required 
+                    />
+                  </div>
+                  <div>
+                    <Textarea 
+                      name="message"
+                      placeholder="Tell us about your project" 
+                      required 
+                    />
+                  </div>
+                  <Button type="submit" className="w-full bg-gradient-to-br from-blue-600 to-cyan-400">
+                    Submit
+                  </Button>
+                </form>
               </Card>
             </div>
           </div>
@@ -257,7 +320,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900/90 backdrop-blur-md text-white py-12">
+      <footer className="bg-gray-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>

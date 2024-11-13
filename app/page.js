@@ -4,6 +4,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2, Users, BarChart3, MessageSquare } from 'lucide-react';
 import Image from 'next/image';
+import Globe from '@/components/Globe'
+import ParticleBackground from '@/components/ParticleBackground'
+import DynamicStats from '@/components/DynamicStats'
 
 // Simplified Components
 const Button = ({ children, className = '', variant = 'default', ...props }) => {
@@ -88,6 +91,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
+      <ParticleBackground />
       {/* Navigation */}
       <nav className="fixed w-full bg-white/80 backdrop-blur-md z-50 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -137,13 +141,7 @@ export default function Home() {
               </div>
             </motion.div>
             <div className="flex-1 relative h-96">
-              <Image
-                src="/api/placeholder/800/600"
-                alt="Hero Image"
-                layout="fill"
-                objectFit="contain"
-                priority
-              />
+            <Globe />
             </div>
           </div>
         </div>
@@ -153,19 +151,9 @@ export default function Home() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {statsData.map(({ id, stat, label, icon: Icon }) => (
-  <Card key={id} gradient className="p-6">
-    <div className="space-y-1">
-      <div className="flex items-center space-x-2">
-        <Icon className="w-6 h-6 text-blue-500" />
-        <h3 className="text-4xl font-bold gradient-text-primary">
-          {stat}
-        </h3>
-      </div>
-      <p className="text-gray-600">{label}</p>
-    </div>
-  </Card>
-))}
+          {statsData.map((data) => (
+    <DynamicStats key={data.id} {...data} />
+  ))}
           </div>
         </div>
       </section>
@@ -203,6 +191,20 @@ export default function Home() {
         </div>
       </section>
 
+
+      <div className="relative">
+      <motion.div
+    animate={{
+      y: [0, 20, 0],
+      rotate: [0, 5, -5, 0]
+    }}
+    transition={{
+      duration: 5,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }}
+    className="absolute -top-10 -right-10 w-20 h-20 bg-blue-500/10 rounded-full blur-xl"
+  />
       <section id="about" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center gap-12">
@@ -250,6 +252,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      </div>
 
       {/* Contact Form */}
       <section id="contact" className="py-20 bg-gray-50">

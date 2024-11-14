@@ -87,7 +87,7 @@ export default function Home() {
     {
       title: 'Custom Development',
       description: 'Bespoke solutions and integrations that extend Salesforce capabilities.',
-      image: '/NearForceWeb/NearForceWeb/320',
+      image: '/NearForceWeb/images/320',
     },
     {
       title: 'Consulting & Strategy',

@@ -287,8 +287,8 @@ export default function Home() {
                     Let's discuss how we can transform your business with Salesforce
                   </p>
                 </div>
-                <form action="https://formsubmit.co/your-email@example.com" method="POST" className="space-y-4">
-                  <input type="hidden" name="_next" value="https://yoursite.com/thanks" />
+                <form action="https://formsubmit.co/santiiparris@gmail.com.com" method="POST" className="space-y-4">
+                  <input type="hidden" name="_next" value="https://santiparris8.github.io/NearForceWeb/" />
                   <input type="hidden" name="_subject" value="New NearForce Contact!" />
                   <input type="hidden" name="_captcha" value="false" />
                   

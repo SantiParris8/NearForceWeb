@@ -7,6 +7,13 @@ import Image from 'next/image';
 import VectorGlobe from '@/components/VectorGlobe'
 import ParticleBackground from '@/components/ParticleBackground'
 import DynamicStats from '@/components/DynamicStats'
+import localFont from 'next/font/local'
+
+// Load Harabara font
+const harabara = localFont({
+  src: '../public/fonts/Harabara.otf',
+  variable: '--font-harabara'
+})
 
 // Simplified Components
 const Button = ({ children, className = '', variant = 'default', ...props }) => {
@@ -96,14 +103,19 @@ export default function Home() {
       <nav className="fixed w-full bg-white/80 backdrop-blur-md z-50 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
-            <div className="flex-shrink-0">
-              <Image
-                src="/NearForceWeb/images/logo.png"
-                alt="NearForce Logo"
-                width={150}
-                height={40}
-                className="object-contain"
-              />
+            <div className="flex items-center gap-3">
+              <div className="flex-shrink-0">
+                <Image
+                  src="/NearForceWeb/images/logo.png"
+                  alt="NearForce Logo"
+                  width={50}
+                  height={50}
+                  className="object-contain"
+                />
+              </div>
+              <span className={`${harabara.variable} font-harabara text-2xl text-gray-600`}>
+                NearForce
+              </span>
             </div>
             <div className="hidden md:flex space-x-8">
               <Button variant="ghost" onClick={() => scrollToSection('services')}>Services</Button>

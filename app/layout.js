@@ -9,7 +9,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/NearForceWeb/favicon.ico" />
       </head>
       <body>{children}</body>
     </html>

@@ -98,7 +98,7 @@ export default function Home() {
           <div className="flex justify-between h-16 items-center">
             <div className="flex-shrink-0">
               <Image
-                src="/api/placeholder/150/40"
+                src="/NearForceWeb/images/logo.png"
                 alt="NearForce Logo"
                 width={150}
                 height={40}

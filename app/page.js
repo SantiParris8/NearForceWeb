@@ -11,7 +11,7 @@ import localFont from 'next/font/local'
 
 // Load Harabara font
 const harabara = localFont({
-  src: '../public/fonts/Harabara.otf',
+  src: '../public/fonts/Harabara.ttf',
   variable: '--font-harabara'
 })
 

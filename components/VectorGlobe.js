@@ -16,9 +16,48 @@ function latLongToVector3(lat, lon, radius) {
   )
 }
 
+function UruguayShape() {
+  // Create a shape from the coordinates
+  const shape = new THREE.Shape()
+  const points = countries.uruguay.map(([lat, lon]) => {
+    const point = latLongToVector3(lat, lon, 1)
+    return new THREE.Vector2(point.x, point.y)
+  })
+  
+  shape.moveTo(points[0].x, points[0].y)
+  points.forEach((point) => shape.lineTo(point.x, point.y))
+  shape.closePath()
+
+  // Create geometry from the shape
+  const geometry = new THREE.ShapeGeometry(shape)
+  
+  return (
+    <mesh renderOrder={1}>
+      <extrudeGeometry 
+        args={[shape, {
+          steps: 1,
+          depth: 0.01,
+          bevelEnabled: false
+        }]}
+      />
+      <meshBasicMaterial 
+        color="#2563eb"
+        transparent
+        opacity={0.4}
+        side={THREE.DoubleSide}
+        depthWrite={false}
+      />
+    </mesh>
+  )
+}
+
 const countries = {
   uruguay: [
-    [-29.0, -73.7], [-26.5, -76.0], [-22.6, -75.3], [-20.7, -74.4], [-20.5, -72.6], [-21.8, -70.3], [-23.9, -68.4], [-25.2, -67.5], [-26.1, -67.8], [-27.0, -67.6], [-28.3, -69.0], [-28.5, -70.0], [-29.4, -70.3], [-29.3, -73.6]
+    [-30.1, -57.3], [-30.2, -56.2], [-31.0, -55.9], [-31.7, -55.0],
+    [-32.5, -54.8], [-33.2, -53.8], [-33.7, -53.4], [-34.5, -53.5],
+    [-35.0, -54.2], [-34.5, -55.4], [-34.3, -56.5], [-34.0, -57.0],
+    [-33.5, -58.0], [-33.2, -58.4], [-32.5, -58.3], [-31.8, -58.2],
+    [-30.9, -57.9], [-30.1, -57.3]
   ],
   otherCountries: [
       // South America (shifted slightly west)
@@ -143,29 +182,44 @@ function Globe() {
         <meshBasicMaterial color="#1a365d" transparent opacity={0.1} />
       </mesh>
 
+
+
       {/* Grid lines */}
-      {latitudeLines.map((points, i) => (
-        <Line
-          key={`lat-${i}`}
-          points={points}
-          color="#3182ce"
-          lineWidth={0.3}
-          transparent
-          opacity={0.2}
-          depthTest={false}
-        />
-      ))}
-      {longitudeLines.map((points, i) => (
-        <Line
-          key={`lon-${i}`}
-          points={points}
-          color="#3182ce"
-          lineWidth={0.3}
-          transparent
-          opacity={0.2}
-          depthTest={false}
-        />
-      ))}
+      {Array.from({ length: 19 }, (_, i) => {
+        const lat = -90 + i * 10
+        const points = Array.from({ length: 361 }, (_, j) => {
+          const lon = -180 + j * 0.5
+          return latLongToVector3(lat, lon, 1)
+        })
+        return (
+          <Line
+            key={`lat-${i}`}
+            points={points}
+            color="#3182ce"
+            lineWidth={0.3}
+            transparent
+            opacity={0.2}
+          />
+        )
+      })}
+      
+      {Array.from({ length: 37 }, (_, i) => {
+        const lon = -180 + i * 10
+        const points = Array.from({ length: 181 }, (_, j) => {
+          const lat = -90 + j * 0.5
+          return latLongToVector3(lat, lon, 1)
+        })
+        return (
+          <Line
+            key={`lon-${i}`}
+            points={points}
+            color="#3182ce"
+            lineWidth={0.3}
+            transparent
+            opacity={0.2}
+          />
+        )
+      })}
 
       {/* Other countries */}
       {countries.otherCountries.map((country, i) => {
@@ -180,22 +234,23 @@ function Globe() {
         )
       })}
 
-      {/* Uruguay fill and outline */}
-      <UruguayFill />
-      {(() => {
-        const points = countries.uruguay.map(([lat, lon]) => 
-          latLongToVector3(lat, lon, 1.002)
-        )
-        return (
-          <Line
-            points={points}
-            color="#2563eb"
-            lineWidth={2.5}
-          />
-        )
-      })()}
+<UruguayShape />
 
-      {/* Outer glow sphere */}
+{/* Uruguay outline */}
+{(() => {
+  const points = countries.uruguay.map(([lat, lon]) => 
+    latLongToVector3(lat, lon, 1.001)
+  )
+  return (
+    <Line
+      points={points}
+      color="#2563eb"
+      lineWidth={2}
+    />
+  )
+})()}
+
+      {/* Outer glow */}
       <mesh>
         <sphereGeometry args={[1.02, 64, 64]} />
         <meshBasicMaterial color="#63b3ed" transparent opacity={0.1} />

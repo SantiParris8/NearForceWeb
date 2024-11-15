@@ -97,7 +97,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-white/5">
+    <div className="min-h-screen bg-white">
       <ParticleBackground />
       {/* Navigation */}
       <nav className="fixed w-full bg-white/80 backdrop-blur-md z-50 border-b">
@@ -160,7 +160,7 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20  bg-gray-50">
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {statsData.map((data) => (
@@ -171,7 +171,7 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-20 bg-white/[0.02] backdrop-blur-[2px]">
+      <section id="services" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold">Our Services</h2>
@@ -217,7 +217,7 @@ export default function Home() {
     }}
     className="absolute -top-10 -right-10 w-20 h-20 bg-blue-500/10 rounded-full blur-xl"
   />
-      <section id="about" className="py-20  bg-gray-50" >
+      <section id="about" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="flex-1">
@@ -267,7 +267,7 @@ export default function Home() {
       </div>
 
       {/* Contact Form */}
-      <section id="contact" className="py-20 bg-white/[0.02] backdrop-blur-[2px]">
+      <section id="contact" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="flex-1 relative h-[600px]">

@@ -35,11 +35,11 @@ export default function ParticleBackground() {
       reset() {
         this.x = Math.random() * canvas.width
         this.y = Math.random() * canvas.height
-        this.size = Math.random() * 2 + 0.5
-        this.speedX = Math.random() * 1 - 0.5
-        this.speedY = Math.random() * 1 - 0.5
+        this.size = Math.random() * 5 + 0.5
+        this.speedX = Math.random() * 1 - 0.9
+        this.speedY = Math.random() * 1 - 0.9
         this.life = 0
-        this.maxLife = Math.random() * 100 + 100
+        this.maxLife = Math.random() * 200 + 200
       }
 
       update() {

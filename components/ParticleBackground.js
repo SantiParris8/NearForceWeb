@@ -40,10 +40,10 @@ export default function ParticleBackground() {
         this.speedY = (Math.random() * 0.3 - 0.15) * 0.3
         this.life = 0
         this.maxLife = Math.random() * 300 + 300
-        // Two-color variation with increased opacity
+        // Make particles more visible with darker blues
         this.color = Math.random() < 0.5 ? 
-          'rgba(66, 153, 225,' : // Blue
-          'rgba(135, 206, 235,' // Sky blue
+          'rgba(30, 144, 255,' :  // Dodger Blue
+          'rgba(0, 102, 204,'     // Darker Sky Blue
       }
 
       update() {
@@ -71,7 +71,7 @@ export default function ParticleBackground() {
       }
 
       draw() {
-        const opacity = (1 - (this.life / this.maxLife)) * 0.85 // Increased from 0.7 to 0.85
+        const opacity = (1 - (this.life / this.maxLife)) * 0.9 // Increased opacity
         ctx.fillStyle = this.color + opacity + ')'
         ctx.beginPath()
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
@@ -79,7 +79,8 @@ export default function ParticleBackground() {
       }
     }
 
-    for (let i = 0; i < 50; i++) {
+    // Create particles
+    for (let i = 0; i < 70; i++) {
       particles.push(new Particle())
     }
 
@@ -100,8 +101,8 @@ export default function ParticleBackground() {
           const distance = Math.sqrt(dx * dx + dy * dy)
 
           if (distance < 150) {
-            const opacity = (1 - distance / 150) * 0.45 // Increased from 0.3 to 0.45
-            ctx.strokeStyle = `rgba(135, 206, 235, ${opacity})`
+            const opacity = (1 - distance / 150) * 0.6 // Increased line opacity
+            ctx.strokeStyle = `rgba(30, 144, 255, ${opacity})` // Darker blue for lines
             ctx.lineWidth = 1.5
             ctx.beginPath()
             ctx.moveTo(p1.x, p1.y)
@@ -138,7 +139,7 @@ export default function ParticleBackground() {
     <canvas
       ref={canvasRef}
       className="fixed top-0 left-0 w-full h-full -z-10"
-      style={{ background: 'linear-gradient(to bottom, #ffffff, #f0f7ff)' }}
+      style={{ background: 'linear-gradient(to bottom, #ffffff, #edf5ff)' }}
     />
   )
 }

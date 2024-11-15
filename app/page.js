@@ -97,7 +97,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-white/90">
+    <div className="min-h-screen bg-white/5 backdrop-blur-sm">
       <ParticleBackground />
       {/* Navigation */}
       <nav className="fixed w-full bg-white/80 backdrop-blur-md z-50 border-b">

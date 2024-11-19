@@ -18,115 +18,79 @@ function latLongToVector3(lat, lon, radius) {
 
 const countries = {
   uruguay: [
-    [-29.0, -73.7], [-26.5, -76.0], [-22.6, -75.3], [-20.7, -74.4], [-20.5, -72.6], [-21.8, -70.3], [-23.9, -68.4], [-25.2, -67.5], [-26.1, -67.8], [-27.0, -67.6], [-28.3, -69.0], [-28.5, -70.0], [-29.4, -70.3], [-29.3, -73.6]
+    [-28.8, -73.3], [-28.7, -74.2], [-27.6, -75.0], [-26.4, -75.0], [-25.8, -74.7], 
+    [-22.9, -74.5], [-21.6, -74.3], [-21.1, -73.9], [-20.9, -73.0], [-21.9, -71.6], 
+    [-22.3, -70.8], [-22.9, -70.3], [-23.4, -69.5], [-24.1, -68.7], [-24.4, -68.2], 
+    [-25.1, -67.7], [-25.5, -67.3], [-26.1, -67.4], [-26.1, -67.8], [-27.0, -67.9], 
+    [-27.6, -67.5], [-28.9, -68.4], [-29.8, -69.6], [-29.4, -70.3], [-29.5, -71.6], 
+    [-28.8, -73.2]
   ],
   otherCountries: [
-      // South America (shifted slightly west)
-      // uruguay
-
-
-// southAmerica
-[
-  [12.4, -91.3], [4.0, -101.3], [-18.3, -90.3], [-52.3, -89.1], [-55.9, -87.3], [-54.9, -84.3], [-34.9, -76.2], [-29.5, -73.5], [-29.5, -70.5], [-28.7, -70.1], [-28.4, -69.1], [-22.9, -63.2], [-5.2, -55.3], [11.7, -91.3], [12.4, -91.3]
-],
-
-// centralAmerica
-[
-  [12.4, -91.3], [13.5, -95.5], [14.2, -99.8], [15.0, -103.9]
-],
-
-// northAmerica
-[
-  [87.3, -128.3], [81.9, -143.0], [83.6, -163.1], [75.2, -176.9], [69.7, -182.4], [65.9, -175.7], [60.6, -167.0], [54.5, -153.7], [48.5, -144.7], [45.5, -144.7], [40.2, -144.1], [34.5, -140.5], [32.5, -137.1], [29.8, -134.8], [24.4, -117.1], [21.1, -110.1], [15.0, -103.9], [29.2, -100.7], [35.9, -96.3], [51.3, -88.3], [55.3, -81.0], [65.9, -79.0], [76.6, -87.0], [76.6, -96.7], [84.6, -98.7], [87.8, -127.6]
-],
-
-
-// africa
-[
-  [26.1, 18.2], [21.8, 37.1], [23.6, 60.6], [3.9, 73.8], [-6.9, 66.2], [-23.2, 65.0], [-40.0, 58.6], [-53.8, 46.0], [-54.9, 38.7], [-38.9, 35.8], [-16.5, 26.2], [-10.1, 5.8], [11.5, 0.6], [25.3, 17.4]
-],
-
-// asia
-[
-  [56.9, 72.6], [65.0, 96.1], [57.2, 139.8], [57.3, 163.7], [46.9, 177.9], [31.1, 175.6], [16.0, 163.3], [9.9, 140.4], [0.6, 132.8], [-9.4, 130.1], [-12.9, 124.3], [-2.9, 119.7], [6.4, 117.4], [10.6, 77.7], [34.3, 66.1], [27.6, 36.5], [35.6, 38.5], [39.1, 31.1], [37.2, 24.3], [30.5, 21.4], [33.7, 12.7], [53.0, 16.9], [54.6, 40.4], [61.3, 54.5], [56.0, 72.2]
-],
-
-// australia
-[
-  [-12.9, 151.7], [-12.5, 161.3], [-10.6, 166.4], [-19.9, 170.0], [-27.9, 177.3], [-41.3, 172.7], [-42.6, 159.3], [-33.9, 150.7], [-35.9, 138.7], [-28.6, 131.3], [-22.6, 134.7], [-19.3, 144.7], [-12.9, 152.5]
-]
+    // South America
+    [12.4, -91.3, 4.0, -101.3, -18.3, -90.3, -52.3, -89.1, -55.9, -87.3, -54.9, -84.3, 
+     -34.9, -76.2, -29.5, -73.5, -29.4, -70.3, -29.8, -69.6, -28.9, -68.3, -27.5, -67.4, 
+     -22.9, -63.2, -5.2, -55.3, 11.7, -91.3, 12.4, -91.3],
+    // Central America
+    [12.4, -91.3, 13.5, -95.5, 14.2, -99.8, 15.0, -103.9],
+    // North America
+    [87.3, -128.3, 81.9, -143.0, 83.6, -163.1, 75.2, -176.9, 69.7, -182.4, 65.9, -175.7,
+     60.6, -167.0, 54.5, -153.7, 48.5, -144.7, 45.5, -144.7, 40.2, -144.1, 34.5, -140.5,
+     32.5, -137.1, 29.8, -134.8, 24.4, -117.1, 21.1, -110.1, 15.0, -103.9, 29.2, -100.7,
+     35.9, -96.3, 51.3, -88.3, 55.3, -81.0, 65.9, -79.0, 76.6, -87.0, 76.6, -96.7,
+     84.6, -98.7, 87.8, -127.6],
+    // Africa
+    [26.1, 18.2, 21.8, 37.1, 23.6, 60.6, 3.9, 73.8, -6.9, 66.2, -23.2, 65.0,
+     -40.0, 58.6, -53.8, 46.0, -54.9, 38.7, -38.9, 35.8, -16.5, 26.2, -10.1, 5.8,
+     11.5, 0.6, 25.3, 17.4],
+    // Asia
+    [56.9, 72.6, 65.0, 96.1, 57.2, 139.8, 57.3, 163.7, 46.9, 177.9, 31.1, 175.6,
+     16.0, 163.3, 9.9, 140.4, 0.6, 132.8, -9.4, 130.1, -12.9, 124.3, -2.9, 119.7,
+     6.4, 117.4, 10.6, 77.7, 34.3, 66.1, 27.6, 36.5, 35.6, 38.5, 39.1, 31.1,
+     37.2, 24.3, 30.5, 21.4, 33.7, 12.7, 53.0, 16.9, 54.6, 40.4, 61.3, 54.5, 56.0, 72.2],
+    // Australia
+    [-12.9, 151.7, -12.5, 161.3, -10.6, 166.4, -19.9, 170.0, -27.9, 177.3, -41.3, 172.7,
+     -42.6, 159.3, -33.9, 150.7, -35.9, 138.7, -28.6, 131.3, -22.6, 134.7, -19.3, 144.7,
+     -12.9, 152.5]
   ]
 }
 
-function UruguayFill() {
-  // Calculate the center point of Uruguay
-  const centerLat = -32.5
-  const centerLon = -56.0
-  const centerPoint = latLongToVector3(centerLat, centerLon, 1.001)
-
-  // Create vertices and faces
-  const vertices = []
-  const indices = []
+function generateUruguayCrossPattern() {
+  // Calculate bounds of Uruguay
+  const lats = countries.uruguay.map(([lat]) => lat)
+  const lons = countries.uruguay.map(([_, lon]) => lon)
+  const minLat = Math.min(...lats)
+  const maxLat = Math.max(...lats)
+  const minLon = Math.min(...lons)
+  const maxLon = Math.max(...lons)
   
-  // Add center point as first vertex
-  vertices.push(centerPoint.x, centerPoint.y, centerPoint.z)
+  // Generate cross-pattern lines
+  const lines = []
+  const spacing = 1 // Spacing between lines in degrees
   
-  // Add border points
-  countries.uruguay.forEach(([lat, lon]) => {
-    const point = latLongToVector3(lat, lon, 1.001)
-    vertices.push(point.x, point.y, point.z)
-  })
-  
-  // Create triangles from center to each pair of consecutive border points
-  for (let i = 1; i < countries.uruguay.length; i++) {
-    indices.push(0, i, i + 1)
+  // Diagonal lines from bottom-left to top-right
+  for (let offset = -10; offset <= 10; offset += spacing) {
+    const line = []
+    for (let t = 0; t <= 1; t += 0.1) {
+      const lat = minLat + (maxLat - minLat) * t + offset
+      const lon = minLon + (maxLon - minLon) * t + offset
+      line.push(latLongToVector3(lat, lon, 1.001))
+    }
+    lines.push(line)
   }
-  // Close the shape
-  indices.push(0, countries.uruguay.length, 1)
-
-  return (
-    <mesh renderOrder={1}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={vertices.length / 3}
-          array={new Float32Array(vertices)}
-          itemSize={3}
-        />
-        <bufferAttribute
-          attach="index"
-          array={new Uint16Array(indices)}
-          count={indices.length}
-          itemSize={1}
-        />
-      </bufferGeometry>
-      <meshBasicMaterial
-        color="#2563eb"
-        transparent
-        opacity={0.3}
-        side={THREE.DoubleSide}
-        depthWrite={false}
-      />
-    </mesh>
-  )
+  
+  // Diagonal lines from bottom-right to top-left
+  for (let offset = -10; offset <= 10; offset += spacing) {
+    const line = []
+    for (let t = 0; t <= 1; t += 0.1) {
+      const lat = minLat + (maxLat - minLat) * t + offset
+      const lon = maxLon - (maxLon - minLon) * t + offset
+      line.push(latLongToVector3(lat, lon, 1.001))
+    }
+    lines.push(line)
+  }
+  
+  return lines
 }
-
-// Rest of the code remains the same
-const latitudeLines = Array.from({ length: 19 }, (_, i) => {
-  const lat = -90 + i * 10
-  return Array.from({ length: 721 }, (_, j) => {
-    const lon = -180 + j * 0.5
-    return latLongToVector3(lat, lon, 1)
-  })
-})
-
-const longitudeLines = Array.from({ length: 37 }, (_, i) => {
-  const lon = -180 + i * 10
-  return Array.from({ length: 361 }, (_, j) => {
-    const lat = -90 + j * 0.5
-    return latLongToVector3(lat, lon, 1)
-  })
-})
 
 function Globe() {
   const globeRef = useRef()
@@ -134,6 +98,24 @@ function Globe() {
   useFrame(({ clock }) => {
     globeRef.current.rotation.y = clock.getElapsedTime() * 0.1
   })
+
+  const latitudeLines = Array.from({ length: 19 }, (_, i) => {
+    const lat = -90 + i * 10
+    return Array.from({ length: 721 }, (_, j) => {
+      const lon = -180 + j * 0.5
+      return latLongToVector3(lat, lon, 1)
+    })
+  })
+
+  const longitudeLines = Array.from({ length: 37 }, (_, i) => {
+    const lon = -180 + i * 10
+    return Array.from({ length: 361 }, (_, j) => {
+      const lat = -90 + j * 0.5
+      return latLongToVector3(lat, lon, 1)
+    })
+  })
+
+  const uruguayCrossPattern = generateUruguayCrossPattern()
 
   return (
     <group ref={globeRef}>
@@ -169,7 +151,10 @@ function Globe() {
 
       {/* Other countries */}
       {countries.otherCountries.map((country, i) => {
-        const points = country.map(([lat, lon]) => latLongToVector3(lat, lon, 1))
+        const points = []
+        for (let j = 0; j < country.length; j += 2) {
+          points.push(latLongToVector3(country[j], country[j + 1], 1))
+        }
         return (
           <Line
             key={`country-${i}`}
@@ -180,8 +165,7 @@ function Globe() {
         )
       })}
 
-      {/* Uruguay fill and outline */}
-      <UruguayFill />
+      {/* Uruguay outline */}
       {(() => {
         const points = countries.uruguay.map(([lat, lon]) => 
           latLongToVector3(lat, lon, 1.002)
@@ -189,11 +173,23 @@ function Globe() {
         return (
           <Line
             points={points}
-            color="#2563eb"
-            lineWidth={2.5}
+            color="#3182ce"
+            lineWidth={1.5}
           />
         )
       })()}
+
+      {/* Uruguay cross pattern */}
+      {uruguayCrossPattern.map((points, i) => (
+        <Line
+          key={`cross-${i}`}
+          points={points}
+          color="#3182ce"
+          lineWidth={0.5}
+          transparent
+          opacity={0.3}
+        />
+      ))}
 
       {/* Outer glow sphere */}
       <mesh>

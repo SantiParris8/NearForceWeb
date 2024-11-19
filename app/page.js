@@ -72,7 +72,7 @@ export default function Home() {
 
 
   const statsData = [
-    { id: 1, stat: '5500+', label: 'Users Supported', icon: Users },
+    { id: 1, stat: '5500+', label: 'Users Onboarded', icon: Users },
     { id: 2, stat: '98%', label: 'Client Retention', icon: CheckCircle2 },
     { id: 3, stat: '$200M+', label: 'Revenue Generated', icon: BarChart3 },
     { id: 4, stat: '30+', label: 'Salesforce Certifications', icon: MessageSquare },

@@ -82,17 +82,17 @@ export default function Home() {
     {
       title: 'Salesforce Implementation',
       description: 'End-to-end implementation services tailored to your business needs.',
-      image: '/NearForceWeb/images/320',
+      image: '/NearForceWeb/images/SFImp',
     },
     {
       title: 'Custom Development',
       description: 'Bespoke solutions and integrations that extend Salesforce capabilities.',
-      image: '/NearForceWeb/images/320',
+      image: '/NearForceWeb/images/statistic.jpg',
     },
     {
       title: 'Consulting & Strategy',
       description: 'Strategic guidance to maximize your Salesforce ROI.',
-      image: '/NearForceWeb/images/320',
+      image: '/NearForceWeb/images/puzzle.jpg',
     },
   ];
 
@@ -254,7 +254,7 @@ export default function Home() {
             </div>
             <div className="flex-1 relative h-[500px]">
               <Image
-                src="/NearForceWeb/images/600"
+                src="/NearForceWeb/images/office.jpg"
                 alt="About Us Image"
                 layout="fill"
                 objectFit="cover"
@@ -272,7 +272,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="flex-1 relative h-[600px]">
               <Image
-                src="/NearForceWeb/images/600"
+                src="/NearForceWeb/images/together.jpg"
                 alt="Contact Image"
                 layout="fill"
                 objectFit="cover"

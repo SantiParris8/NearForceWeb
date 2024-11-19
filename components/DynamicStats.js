@@ -37,6 +37,7 @@ function CountUp({ end, duration = 2 }) {
       {end.startsWith('$') ? '$' : ''}
       {count}
       {end.endsWith('%') ? '%' : ''}
+      {end.endsWith('M+') ? 'M+' : ''}
       {end.endsWith('+') ? '+' : ''}
     </span>
   )

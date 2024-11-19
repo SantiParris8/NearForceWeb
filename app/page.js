@@ -72,10 +72,10 @@ export default function Home() {
 
 
   const statsData = [
-    { id: 1, stat: '500+', label: 'Enterprise Clients', icon: Users },
+    { id: 1, stat: '5500+', label: 'Users Supported', icon: Users },
     { id: 2, stat: '98%', label: 'Client Retention', icon: CheckCircle2 },
-    { id: 3, stat: '$2B+', label: 'Revenue Generated', icon: BarChart3 },
-    { id: 4, stat: '50+', label: 'Certified Experts', icon: MessageSquare },
+    { id: 3, stat: '$200M+', label: 'Revenue Generated', icon: BarChart3 },
+    { id: 4, stat: '30+', label: 'Salesforce Certifications', icon: MessageSquare },
   ];
 
   const services = [
@@ -232,7 +232,7 @@ export default function Home() {
                   committed to delivering exceptional CRM solutions that drive business growth and innovation.
                 </p>
                 <p className="text-gray-600 mb-6">
-                  With over a decade of experience and hundreds of successful implementations, our team of certified experts 
+                  With over a decade of experience and successful implementations, our team of certified experts 
                   brings unparalleled expertise to every project. We understand that each business is unique, which is why 
                   we take a customized approach to every solution we deliver.
                 </p>

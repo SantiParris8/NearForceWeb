@@ -54,37 +54,33 @@ const countries = {
   ]
 }
 
-function generateUruguayCrossPattern() {
-  // Calculate bounds of Uruguay
-  const lats = countries.uruguay.map(([lat]) => lat)
-  const lons = countries.uruguay.map(([_, lon]) => lon)
+function generateUruguayLines() {
+  // Calculate bounding box
+  const coords = countries.uruguay
+  const lats = coords.map(([lat]) => lat)
+  const lons = coords.map(([_, lon]) => lon)
   const minLat = Math.min(...lats)
   const maxLat = Math.max(...lats)
   const minLon = Math.min(...lons)
   const maxLon = Math.max(...lons)
   
-  // Generate cross-pattern lines
   const lines = []
-  const spacing = 1 // Spacing between lines in degrees
+  const numLines = 15
   
-  // Diagonal lines from bottom-left to top-right
-  for (let offset = -10; offset <= 10; offset += spacing) {
+  // Create diagonal lines
+  for (let i = 0; i < numLines; i++) {
+    // Calculate start and end points along the left and right edges
+    const t = i / (numLines - 1)
+    const startLat = minLat + (maxLat - minLat) * t
+    const endLat = minLat + (maxLat - minLat) * (1 - t)
+    
+    // Create the line with multiple points for proper curvature
     const line = []
-    for (let t = 0; t <= 1; t += 0.1) {
-      const lat = minLat + (maxLat - minLat) * t + offset
-      const lon = minLon + (maxLon - minLon) * t + offset
-      line.push(latLongToVector3(lat, lon, 1.001))
-    }
-    lines.push(line)
-  }
-  
-  // Diagonal lines from bottom-right to top-left
-  for (let offset = -10; offset <= 10; offset += spacing) {
-    const line = []
-    for (let t = 0; t <= 1; t += 0.1) {
-      const lat = minLat + (maxLat - minLat) * t + offset
-      const lon = maxLon - (maxLon - minLon) * t + offset
-      line.push(latLongToVector3(lat, lon, 1.001))
+    for (let j = 0; j <= 10; j++) {
+      const s = j / 10
+      const lat = startLat + (endLat - startLat) * s
+      const lon = minLon + (maxLon - minLon) * s
+      line.push(latLongToVector3(lat, lon, 1.003)) // Slightly above the surface
     }
     lines.push(line)
   }
@@ -115,7 +111,7 @@ function Globe() {
     })
   })
 
-  const uruguayCrossPattern = generateUruguayCrossPattern()
+  const uruguayLines = generateUruguayLines()
 
   return (
     <group ref={globeRef}>
@@ -179,15 +175,15 @@ function Globe() {
         )
       })()}
 
-      {/* Uruguay cross pattern */}
-      {uruguayCrossPattern.map((points, i) => (
+      {/* Uruguay diagonal lines */}
+      {uruguayLines.map((points, i) => (
         <Line
-          key={`cross-${i}`}
+          key={`diagonal-${i}`}
           points={points}
           color="#3182ce"
-          lineWidth={0.5}
+          lineWidth={0.75}
           transparent
-          opacity={0.3}
+          opacity={0.5}
         />
       ))}
 

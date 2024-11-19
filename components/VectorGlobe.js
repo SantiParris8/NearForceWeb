@@ -54,57 +54,7 @@ const countries = {
   ]
 }
 
-function generateUruguayLines() {
-  // Calculate bounding box
-  const coords = countries.uruguay
-  const lats = coords.map(([lat]) => lat)
-  const lons = coords.map(([_, lon]) => lon)
-  
-  // Find the leftmost and rightmost points
-  const leftLon = Math.min(...lons)
-  const rightLon = Math.max(...lons)
-  
-  const lines = []
-  const numLines = 15
-  
-  // Find points along the left and right edges of Uruguay
-  const leftPoints = []
-  const rightPoints = []
-  
-  coords.forEach(([lat, lon], i) => {
-    if (Math.abs(lon - leftLon) < 1) {
-      leftPoints.push([lat, lon])
-    }
-    if (Math.abs(lon - rightLon) < 1) {
-      rightPoints.push([lat, lon])
-    }
-  })
-  
-  // Sort points from top to bottom
-  leftPoints.sort((a, b) => b[0] - a[0])
-  rightPoints.sort((a, b) => b[0] - a[0])
-  
-  // Create evenly spaced lines between the edges
-  for (let i = 0; i < numLines; i++) {
-    const t = i / (numLines - 1)
-    const leftIndex = Math.floor(t * (leftPoints.length - 1))
-    const rightIndex = Math.floor(t * (rightPoints.length - 1))
-    
-    const [leftLat, leftLon] = leftPoints[leftIndex]
-    const [rightLat, rightLon] = rightPoints[rightIndex]
-    
-    const line = []
-    for (let j = 0; j <= 10; j++) {
-      const s = j / 10
-      const lat = leftLat + (rightLat - leftLat) * s
-      const lon = leftLon + (rightLon - leftLon) * s
-      line.push(latLongToVector3(lat, lon, 1.003))
-    }
-    lines.push(line)
-  }
-  
-  return lines
-}
+
 
 function Globe() {
   const globeRef = useRef()
@@ -129,7 +79,6 @@ function Globe() {
     })
   })
 
-  const uruguayLines = generateUruguayLines()
 
   return (
     <group ref={globeRef}>
@@ -193,18 +142,6 @@ function Globe() {
         )
       })()}
 
-      {/* Uruguay diagonal lines */}
-      {uruguayLines.map((points, i) => (
-        <Line
-          key={`diagonal-${i}`}
-          points={points}
-          color="#3182ce"
-          lineWidth={0.75}
-          transparent
-          opacity={0.5}
-          depthTest={false}
-        />
-      ))}
 
       {/* Outer glow sphere */}
       <mesh>

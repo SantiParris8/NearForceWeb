@@ -87,12 +87,12 @@ export default function Home() {
     {
       title: 'Custom Development',
       description: 'Bespoke solutions and integrations that extend Salesforce capabilities.',
-      image: '/NearForceWeb/images/statistic.jpg',
+      image: '/NearForceWeb/images/code.jpg',
     },
     {
       title: 'Consulting & Strategy',
       description: 'Strategic guidance to maximize your Salesforce ROI.',
-      image: '/NearForceWeb/images/puzzle.jpg',
+      image: '/NearForceWeb/images/statistic.jpg',
     },
   ];
 

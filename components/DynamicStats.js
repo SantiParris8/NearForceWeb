@@ -36,8 +36,9 @@ function CountUp({ end, duration = 2 }) {
     <span ref={countRef}>
       {end.startsWith('$') ? '$' : ''}
       {count}
-      {end.endsWith('%') ? '%' : ''}
-      {end.endsWith('M+') ? end : end.endsWith('+') ? end : ''}
+      {end.endsWith('M+') ? 'M+' : 
+       end.endsWith('+') ? '+' : 
+       end.endsWith('%') ? '%' : ''}
     </span>
   )
 }

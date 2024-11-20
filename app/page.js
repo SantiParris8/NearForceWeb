@@ -98,7 +98,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      <ParticleBackground />
       {/* Navigation */}
       <nav className="fixed w-full bg-white/80 backdrop-blur-md z-50 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -143,7 +142,7 @@ export default function Home() {
   </span>
 </h1>
               <p className="text-xl text-gray-600 mb-8">
-                Partner with the leading Salesforce consultancy to unlock your business potential.
+              Partner with a cost-effective, agile, and reliable Salesforce consultancy. Delivering optimal solutions from South America, we combine speed, quality, and expertise to drive your success.
               </p>
               <div className="flex gap-4">
                 <Button className="bg-gradient-to-r from-blue-600 to-cyan-500">
@@ -246,7 +245,7 @@ export default function Home() {
                   <div className="space-y-2">
                     <h3 className="text-xl font-semibold text-blue-600">Our Vision</h3>
                     <p className="text-gray-600">
-                      To be the most trusted name in Salesforce consulting, known for excellence and innovation.
+                      To be the most trusted name in Salesforce nearshore consulting, known for excellence and innovation.
                     </p>
                   </div>
                 </div>

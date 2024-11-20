@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2, Users, BarChart3, MessageSquare } from 'lucide-react';
 import Image from 'next/image';
 import VectorGlobe from '@/components/VectorGlobe'
-import ParticleBackground from '@/components/ParticleBackground'
 import DynamicStats from '@/components/DynamicStats'
 import localFont from 'next/font/local'
 

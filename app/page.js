@@ -150,7 +150,7 @@ export default function Home() {
                 <Button variant="outline">Watch Demo</Button>
               </div>
             </motion.div>
-            <div className="flex-1 relative h-96">
+            <div className="flex-1 mt-0 md:-mt-16 relative h-96">
             <VectorGlobe />
             </div>
           </div>
